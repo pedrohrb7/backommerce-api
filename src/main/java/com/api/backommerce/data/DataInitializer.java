@@ -70,7 +70,6 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
         roles.stream()
                 .filter(role -> roleRepository.findByName(role).isEmpty())
                 .map(Role::new).forEach(roleRepository::save);
-
     }
 
 }

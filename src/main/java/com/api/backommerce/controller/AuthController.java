@@ -34,10 +34,13 @@ public class AuthController {
             Authentication authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(
                             request.getEmail(), request.getPassword()));
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtUtils.generateTokenForUser(authentication);
             ShopUserDetails userDetails = (ShopUserDetails) authentication.getPrincipal();
+
             JwtResponse jwtResponse = new JwtResponse(userDetails.getId(), jwt);
+
             return ResponseEntity.ok(new ApiResponse("Login Successful", jwtResponse));
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(e.getMessage(), null));
